@@ -49,7 +49,7 @@ print("Computer chose:\n")
 print(hands[theirhand])
 print()
 
-if (myhand == 0 and theirhand == 1) | (myhand == 1 and theirhand == 2) | (myhand == 2 and theirhand == 1):
+if (myhand == 0 and theirhand == 1) or (myhand == 1 and theirhand == 2) or (myhand == 2 and theirhand == 1):
     print("You lose")
 else:
     print("You win")
