@@ -5,7 +5,7 @@ import os
 current = os.path.dirname(os.path.realpath(__file__))
 parent = os.path.dirname(current)
 sys.path.append(parent)
-import helper_functions  # all functions that are passed to defensive_while need to return a list with True as first element to break out
+import beginner.helper_functions as helper_functions  # all functions that are passed to defensive_while need to return a list with True as first element to break out
 from replit import clear
 
 from logo import logo
