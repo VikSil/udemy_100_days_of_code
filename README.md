@@ -1,22 +1,24 @@
 # 100 Days of Code: The Complete Python Pro Bootcamp
 
-This repository contains code produced while taking "100 Days od Code" Udemy Python course.
+This repository contains code produced while taking "100 Days of Code" Udemy Python course.
 
 The course website can be viewed [here](https://www.udemy.com/course/100-days-of-code).
 
+❗ Some of the code was developed in Auditorium learning environment and won't run without its inbuilt functions ❗
+
 ## Beginner 
 
-* Day 1: Working with Variables in Python to Manage Data
-* Day 2: Understanding Data Types and How to Manipulate Strings
-* Day 3: Control Flow and Logical Operators
-* Day 4: Randomisation and Python Lists
-* Day 5: Python Loops
-* Day 6: Python Functions & Karel
-* Day 7: Hangman
-* Day 8: Function Parameters & Ceasar Cipher
-* Day 9: Dictionaries, Nesting and the Secret Auction
-* Day 10: Functions with Outputs
-* Day 11: The Blackjack Capstone Project
+* [Day 1: Working with Variables in Python to Manage Data](https://github.com/VikSil/Udemy100daysOfCode/tree/trunk/beginner/day_001-variables)
+* [Day 2: Understanding Data Types and How to Manipulate Strings](https://github.com/VikSil/Udemy100daysOfCode/tree/trunk/beginner/day_002-data_types)
+* [Day 3: Control Flow and Logical Operators](https://github.com/VikSil/Udemy100daysOfCode/tree/trunk/beginner/day_003-control_flow_logical_operators)
+* [Day 4: Randomisation and Python Lists](https://github.com/VikSil/Udemy100daysOfCode/tree/trunk/beginner/day_004-randomisation_lists)
+* [Day 5: Python Loops](https://github.com/VikSil/Udemy100daysOfCode/tree/trunk/beginner/day_005-loops)
+* [Day 6: Python Functions & Karel](https://github.com/VikSil/Udemy100daysOfCode/tree/trunk/beginner/day_006-functions)
+* [Day 7: Hangman](https://github.com/VikSil/Udemy100daysOfCode/tree/trunk/beginner/day_007-hangman_game)
+* [Day 8: Function Parameters & Ceasar Cipher](https://github.com/VikSil/Udemy100daysOfCode/tree/trunk/beginner/day_008-function_parameters)
+* [Day 9: Dictionaries, Nesting and the Secret Auction](https://github.com/VikSil/Udemy100daysOfCode/tree/trunk/beginner/day_009-dictionaries_nesting)
+* [Day 10: Functions with Outputs](https://github.com/VikSil/Udemy100daysOfCode/tree/trunk/beginner/day_010-functions_with_outputs)
+* [Day 11: The Blackjack Capstone Project](https://github.com/VikSil/Udemy100daysOfCode/tree/trunk/beginner/day_011-blackjack)
 * Day 12: Scope & Number Guessing Game
 * Day 13: Debugging: how to Find and Fix Errros in your Code
 * Day 14: Higher Lower Game Project
