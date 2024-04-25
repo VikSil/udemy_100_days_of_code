@@ -25,23 +25,23 @@ The course website can be viewed [here](https://www.udemy.com/course/100-days-of
 
 ## Intermediate
 
-* Day 15: Local Development Environment Setup and the Coffee Machine
-* Day 16: Object Oriented Programming (OOP)
-* Day 17: The Quiz Project & the Benefits of OOP
-* Day 18: Turtle & the Graphical User Interface (GUI)
-* Day 19: Instances, State and Higher Order Functions
-* Day 20: Build the Snake Game Part1: Animation & Coordinates
-* Day 21: Build the Snake Game Part2: Inheritence & List Slicing
-* Day 22: Build Pong: The Famous Arcade Game
-* Day 23: The Turtle Crossing Capstone Project
-* Day 24: Files, Directories and Paths
-* Day 25: Working with CSV and the Pandas Library
-* Day 26: List Comprehension and the NATO Alphabet
-* Day 27: Tkinter, *args, **kwargs and Creating GUI Programs
-* Day 28: Tkinter, Dynamic Typing and the Pomodoro GUI Application
-* Day 29: Building a Password Manager GUI App with Tkinter
-* Day 30: Errors, Exceptions and JSON Data: Improving the Password
-* Day 31: Flash Card App Capstone Project
+* [Day 15: Local Development Environment Setup and the Coffee Machine](https://github.com/VikSil/Udemy100daysOfCode/tree/trunk/intermediate/day_015-environment_and_cofee_machine)
+* [Day 16: Object Oriented Programming (OOP)](https://github.com/VikSil/Udemy100daysOfCode/tree/trunk/intermediate/day_016-oop)
+* [Day 17: The Quiz Project & the Benefits of OOP](https://github.com/VikSil/Udemy100daysOfCode/tree/trunk/intermediate/day_017-quiz_project)
+* [Day 18: Turtle & the Graphical User Interface (GUI)](https://github.com/VikSil/Udemy100daysOfCode/tree/trunk/intermediate/day_018-turtle_and_gui)
+* [Day 19: Instances, State and Higher Order Functions](https://github.com/VikSil/Udemy100daysOfCode/tree/trunk/intermediate/day_019-instances_state_higher_order_functions)
+* [Day 20: Build the Snake Game Part1: Animation & Coordinates](https://github.com/VikSil/Udemy100daysOfCode/tree/trunk/intermediate/day_020-snake_game_1)
+* [Day 21: Build the Snake Game Part2: Inheritence & List Slicing](https://github.com/VikSil/Udemy100daysOfCode/tree/trunk/intermediate/day_021-snake_game_2)
+* [Day 22: Build Pong: The Famous Arcade Game](https://github.com/VikSil/Udemy100daysOfCode/tree/trunk/intermediate/day_022-pong)
+* [Day 23: The Turtle Crossing Capstone Project](https://github.com/VikSil/Udemy100daysOfCode/tree/trunk/intermediate/day_023-turtle_crossing)
+* [Day 24: Files, Directories and Paths](https://github.com/VikSil/Udemy100daysOfCode/tree/trunk/intermediate/day_024-files_directories_paths)
+* [Day 25: Working with CSV and the Pandas Library](https://github.com/VikSil/Udemy100daysOfCode/tree/trunk/intermediate/day_025-csv_and_pandas)
+* [Day 26: List Comprehension and the NATO Alphabet](https://github.com/VikSil/Udemy100daysOfCode/tree/trunk/intermediate/day_026-list_comprehension)
+* [Day 27: Tkinter, *args, **kwargs and Creating GUI Programs](https://github.com/VikSil/Udemy100daysOfCode/tree/trunk/intermediate/day_027-tkinter_args_kwargs_gui)
+* [Day 28: Tkinter, Dynamic Typing and the Pomodoro GUI Application](https://github.com/VikSil/Udemy100daysOfCode/tree/trunk/intermediate/day_028-tkinter_dynamic_typing_pomodoro)
+* [Day 29: Building a Password Manager GUI App with Tkinter](https://github.com/VikSil/Udemy100daysOfCode/tree/trunk/intermediate/day_029-password_manager)
+* [Day 30: Errors, Exceptions and JSON Data: Improving the Password](https://github.com/VikSil/Udemy100daysOfCode/tree/trunk/intermediate/day_030-errors_exceptions_json)
+* [Day 31: Flash Card App Capstone Project](https://github.com/VikSil/Udemy100daysOfCode/tree/trunk/intermediate/day_031-flash_card_app)
 
 ## Intermediate+
 
