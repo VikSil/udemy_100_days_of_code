@@ -1,5 +1,4 @@
 from turtle import Turtle
-from random import randint
 
 LINK_SIZE = 20
 MOVE_DISTANCE = 20
