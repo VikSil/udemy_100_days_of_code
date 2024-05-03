@@ -1,4 +1,5 @@
 import os
+import json
 import pyperclip
 from tkinter import *
 from tkinter import messagebox # this is a module not a class, hence needs to be imported separately
@@ -40,19 +41,50 @@ def save():
     website = website_textbox.get()
     username = email_textbox.get()
     psw = password_textbox.get()
+    screen_data = {website: {
+        'email':username,
+        'password':psw
+    }}
 
     if len(website) == 0 or len(username) == 0 or len(psw) == 0:
         messagebox.showwarning(title = 'Missing info', message = 'Please fill out all of the fields.')
 
     else:
-        proceed = messagebox.askokcancel(title = website, message=f'These credentials will be saved: \nEmail: {username}\nPassword: {psw}\nProceed?')
+        try:
+            with open(f'{current_dir}/output.json', mode ='r') as file:
+                data = json.load(file)
+                data.update(screen_data)
+        
+        except FileNotFoundError:
+            with open(f'{current_dir}/output.json', mode ='w') as file:
+                json.dump(screen_data, file, indent=4)
 
-        if proceed: 
-            with open(f'{current_dir}/output.txt', mode ='a') as file:
-                file.write(f'{website} | {username} | {psw}\n')
-                website_textbox.delete(0,END)
-                password_textbox.delete(0, END)
+        else:
+            with open(f'{current_dir}/output.json', mode ='w') as file:
+                json.dump(data, file, indent=4)
 
+            website_textbox.delete(0,END)
+            password_textbox.delete(0, END)
+
+
+# ---------------------------- SEARCH FILE ------------------------------- #
+
+def search():
+
+    try:
+        with open(f'{current_dir}/output.json') as file:
+            file_data = json.load(file)
+    except FileNotFoundError:
+        messagebox.showerror(title='Error', message='Credentials Not Found!')
+    else:
+        search_website = website_textbox.get()
+        try:
+            found_username = file_data[search_website]['email']
+            found_psw = file_data[search_website]['password']
+        except KeyError:
+            messagebox.showerror(title = 'Error', message='Credentials Not Found!')
+        else:
+            messagebox.showinfo(title = f'{search_website} credentials', message = f'Username: {found_username}\nPassword: {found_psw}')
 
 # ---------------------------- UI SETUP ------------------------------- #
 
@@ -79,16 +111,19 @@ password_label = Label(text='Password:')
 password_label.grid(column=0, row=3)
 
 
-website_textbox = Entry(width=45)
-website_textbox.grid(column=1, row=1, columnspan=2, sticky='w')
+website_textbox = Entry(width=25)
+website_textbox.grid(column=1, row=1, sticky='w')
 website_textbox.focus()
+
+search_btn = Button(text = 'Search', width = 15, command=search)
+search_btn.grid(column=2, row=1, sticky='e')
 
 email_textbox = Entry(width=45)
 email_textbox.grid(column=1, row=2, columnspan=2)
 email_textbox.insert(END, "myemail@domain.com")
 
 password_textbox = Entry(width=25)
-password_textbox.grid(column=1, row=3, pady=0, sticky='w')
+password_textbox.grid(column=1, row=3, sticky='w')
 
 generate_btn = Button(text='Generate Password', command=generate)
 generate_btn.grid(column=2, row=3, sticky='e')
