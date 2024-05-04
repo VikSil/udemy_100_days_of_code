@@ -94,7 +94,7 @@ See "Web Foundation" section for Day 65.
 * Day 66: Building Your Own API with RESTful Routing
 * Day 67: Blog Capstone Project Part 3 - RESTful Routing
 * Day 68: Authentication with Flask
-* Day 69: Blog Capsotne Project Part 4- Adding Users
+* Day 69: Blog Capstone Project Part 4- Adding Users
 * Day 70: Git, Github and Version Control
 * Day 71: Deploying Your Web Application
 * Day 72: data Exploration with Pandas: College Major vs Your Salary
