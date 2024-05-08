@@ -23,6 +23,7 @@ env.read_env(BASE_DIR / 'variables.env')
 FROM_EMAIL = env('FROM_EMAIL')
 APP_PSW = env('APP_PSW')
 
+
 def main():
 
     birthdays = pd.read_csv(BASE_DIR / 'project/birthdays.csv')
@@ -30,7 +31,7 @@ def main():
     has_birthday = birthdays.loc[(birthdays['month'] == now.month) & (birthdays['day'] == now.day)]
     if not has_birthday.empty:
         recipients = has_birthday['name']
-        templates = ['letter_1.txt','letter_2.txt', 'letter_3.txt']
+        templates = ['letter_1.txt', 'letter_2.txt', 'letter_3.txt']
         for recipient in recipients:
             with open(f'{BASE_DIR}/project/letter_templates/{random.choice(templates)}') as file:
                 text = file.read()
@@ -39,10 +40,11 @@ def main():
             subject = 'Happy Birthday!'
             email = birthdays.loc[(birthdays['name'] == recipient)].iloc[0]['email']
 
-            with smtplib.SMTP('smtp.gmail.com', port = 587) as connection:
+            with smtplib.SMTP('smtp.gmail.com', port=587) as connection:
                 connection.starttls()
                 connection.login(user=FROM_EMAIL, password=APP_PSW)
                 connection.sendmail(from_addr=FROM_EMAIL, to_addrs=email, msg=f'Subject:{subject}\n\n{text}')
+
 
 if __name__ == "__main__":
     main()

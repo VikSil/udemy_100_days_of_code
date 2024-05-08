@@ -9,7 +9,7 @@ class Scoreboard(Turtle):
         super().__init__()
         self.level = 0
         self.up()
-        self.goto(x= -290, y=260)
+        self.goto(x=-290, y=260)
         self.hideturtle()
         self.refresh()
 

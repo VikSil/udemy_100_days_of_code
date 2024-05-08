@@ -48,18 +48,14 @@ def calculate(first, operation, second):
 
 
 def print_result(first, operation, second, result):
-    print(
-        f"{str(float(first))} {operation} {str(float(second))} = {str(float(result))}"
-    )
+    print(f"{str(float(first))} {operation} {str(float(second))} = {str(float(result))}")
 
 
 def go_again(result):
     """
     Asks the user if they want to use the result for another calculation
     """
-    again = input(
-        f"Type 'y' to continue calculating with {result}, or type 'n' to start a new calculation: "
-    )
+    again = input(f"Type 'y' to continue calculating with {result}, or type 'n' to start a new calculation: ")
     # if yes - don't stop the calculation loop - False
     if again.lower() == "y":
         return list([True, False])

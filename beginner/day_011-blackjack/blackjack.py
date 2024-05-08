@@ -71,9 +71,7 @@ def gone_over(hand: list):
 
 def end_game(both_hands: dict):
     # reveal computer's hand
-    print(
-        f"Dealer's cards: {both_hands['deal_hand']}, score: {special_sum(both_hands['deal_hand'])}"
-    )
+    print(f"Dealer's cards: {both_hands['deal_hand']}, score: {special_sum(both_hands['deal_hand'])}")
 
     # user overrun their hand - automatic loss
     if special_sum(both_hands["my_hand"]) > 21:
@@ -115,9 +113,7 @@ def round(counter, hands):
     # user's rounds
     elif counter < 12:  # theoretically user could get 2 * 10 before overruning
         # tell the user his hand and first card in computer's hand
-        print(
-            f"Your cards: {hands['my_hand']}, current score: {special_sum(hands['my_hand'])}"
-        )
+        print(f"Your cards: {hands['my_hand']}, current score: {special_sum(hands['my_hand'])}")
 
         # check if user gone over - end game if they have
         if gone_over(hands["my_hand"]):

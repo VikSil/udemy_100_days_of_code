@@ -59,7 +59,7 @@ class Snake:
         return False
 
     def grow(self):
-        self.num_of_links +=1
+        self.num_of_links += 1
         self.body.append(Turtle())
         tail = self.body[-1]
         tail.up()

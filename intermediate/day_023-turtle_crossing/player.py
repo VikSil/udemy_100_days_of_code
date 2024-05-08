@@ -7,7 +7,7 @@ UP = 90
 
 
 class Player(Turtle):
-    
+
     def __init__(self):
         super().__init__()
         self.up()

@@ -44,7 +44,7 @@ def main():
             ball.restart()
             time.sleep(1)
 
-        if ball.xcor() < -411: # screen works differently on right and left side for some reason
+        if ball.xcor() < -411:  # screen works differently on right and left side for some reason
             score.right_score += 1
             score.refresh()
             ball.restart()

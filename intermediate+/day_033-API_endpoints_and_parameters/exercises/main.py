@@ -5,12 +5,12 @@ import requests
 
 BASE_DIR = Path(__file__).resolve().parent
 
+
 def get_quote():
-    pass
     response = requests.get(url='https://api.kanye.rest')
     response.raise_for_status()
     data = response.json()
-    canvas.itemconfig(quote_text, text = data['quote'])
+    canvas.itemconfig(quote_text, text=data['quote'])
 
 
 window = Tk()
@@ -20,7 +20,9 @@ window.config(padx=50, pady=50)
 canvas = Canvas(width=300, height=414)
 background_img = PhotoImage(file=BASE_DIR / 'background.png')
 canvas.create_image(150, 207, image=background_img)
-quote_text = canvas.create_text(150, 207, text='Kanye Quote Goes HERE', width=250, font=('Arial', 30, 'bold'), fill='white')
+quote_text = canvas.create_text(
+    150, 207, text='Kanye Quote Goes HERE', width=250, font=('Arial', 30, 'bold'), fill='white'
+)
 canvas.grid(row=0, column=0)
 
 kanye_img = PhotoImage(file=BASE_DIR / 'kanye.png')

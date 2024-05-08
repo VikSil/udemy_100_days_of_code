@@ -21,5 +21,5 @@ class Scoreboard(Turtle):
         self.write(f'{self.left_score} : {self.right_score}', False, align=ALIGNMENT, font=FONT)
 
     def game_over(self):
-        self.goto(0,0)
+        self.goto(0, 0)
         self.write('GAME OVER', False, align=ALIGNMENT, font=FONT)

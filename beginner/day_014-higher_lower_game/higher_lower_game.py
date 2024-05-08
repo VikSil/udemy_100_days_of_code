@@ -3,6 +3,7 @@ import random
 from art import *
 from game_data import *
 
+
 def get_a_guess():
     guess = None
     while not guess:
@@ -12,10 +13,11 @@ def get_a_guess():
             print('Wrong input. Try again.')
     return guess
 
-def get_a_and_b(a = -1, b = -1):
+
+def get_a_and_b(a=-1, b=-1):
     if a < 0:
         a = random.randint(0, len(data) - 1)
-    
+
     b = random.randint(0, len(data) - 1)
 
     while a == b:
@@ -23,10 +25,11 @@ def get_a_and_b(a = -1, b = -1):
 
     return a, b
 
+
 def main():
     score = 0
     game_over = False
-    a = b = -1 
+    a = b = -1
 
     while not game_over:
         print(logo)
@@ -44,11 +47,13 @@ def main():
 
         guess = get_a_guess()
 
-        if (guess == 'A' and data[a]['follower_count'] > data[b]['follower_count']) or (guess == 'B' and data[a]['follower_count'] < data[b]['follower_count']):
+        if (guess == 'A' and data[a]['follower_count'] > data[b]['follower_count']) or (
+            guess == 'B' and data[a]['follower_count'] < data[b]['follower_count']
+        ):
             score += 1
-            a = b 
+            a = b
             os.system('cls')
-        else:            
+        else:
             game_over = True
 
     os.system('cls')

@@ -26,6 +26,5 @@ def main():
     print(user_phonetics)
 
 
-
 if __name__ == "__main__":
     main()

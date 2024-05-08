@@ -13,7 +13,7 @@ class Scoreboard(Turtle):
         self.high_score = 0
         self.color('pink')
         self.up()
-        self.goto(x = 0, y = 260)
+        self.goto(x=0, y=260)
         self.hideturtle()
         self.refresh()
 
@@ -28,7 +28,7 @@ class Scoreboard(Turtle):
         if self.score > self.high_score:
             self.high_score = self.score
             current_dir = os.path.dirname(os.path.realpath(__file__))
-            with open(f'{current_dir}/high_score.txt', mode = 'w') as file:
+            with open(f'{current_dir}/high_score.txt', mode='w') as file:
                 file.write(str(self.high_score))
 
         self.score = 0

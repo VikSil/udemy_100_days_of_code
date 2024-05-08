@@ -14,13 +14,13 @@ def main():
     # csv import with pandas
     temperatures = pandas.read_csv(f'{current_dir}/weather_data.csv')
     print(temperatures['temp'])
-    temperatures_dict  =temperatures.to_dict()
+    temperatures_dict = temperatures.to_dict()
     print(temperatures_dict)
     temperatures_list = temperatures['temp'].to_list()
     print(temperatures_list)
 
     # data manipulation
-    average_temperature = round(temperatures.temp.mean(),2)
+    average_temperature = round(temperatures.temp.mean(), 2)
     print(average_temperature)
 
     max_temperature = temperatures.temp.max()
@@ -32,17 +32,15 @@ def main():
     hottest_day = temperatures[temperatures.temp == temperatures.temp.max()]
     print(hottest_day)
 
-    moday_temperature_F = monday_weather.temp[0] *  9/5 + 32
+    moday_temperature_F = monday_weather.temp[0] * 9 / 5 + 32
     print(moday_temperature_F)
 
     # creating dataframe
-    data_dict = {
-        'students': ['Amy', 'James', 'Angela'],
-        'scores': [76, 56, 65]
-    }
+    data_dict = {'students': ['Amy', 'James', 'Angela'], 'scores': [76, 56, 65]}
     data = pandas.DataFrame(data_dict)
     print(data)
     data.to_csv(f'{current_dir}/data_output.csv')
+
 
 if __name__ == "__main__":
     main()

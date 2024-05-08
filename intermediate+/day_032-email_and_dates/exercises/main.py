@@ -18,13 +18,13 @@ def main():
 
     now = dt.datetime.now()
     if now.weekday() == 0:
-        with open(BASE_DIR/'exercises/quotes.txt') as file:
+        with open(BASE_DIR / 'exercises/quotes.txt') as file:
             quotes = file.readlines()
 
         todays_quote = random.choice(quotes)
         subject = 'Motivational Quote'
 
-        with smtplib.SMTP('smtp.gmail.com', port = 587) as connection:
+        with smtplib.SMTP('smtp.gmail.com', port=587) as connection:
             connection.starttls()
             connection.login(user=FROM_EMAIL, password=APP_PSW)
             connection.sendmail(from_addr=FROM_EMAIL, to_addrs=TO_EMAIL, msg=f'Subject:{subject}\n\n{todays_quote}')

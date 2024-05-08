@@ -2,7 +2,7 @@ import os
 import json
 import pyperclip
 from tkinter import *
-from tkinter import messagebox # this is a module not a class, hence needs to be imported separately
+from tkinter import messagebox  # this is a module not a class, hence needs to be imported separately
 from random import choice, randint, shuffle
 
 current_dir = os.path.dirname(os.path.realpath(__file__))
@@ -12,7 +12,60 @@ current_dir = os.path.dirname(os.path.realpath(__file__))
 
 
 def generate():
-    letters = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z']
+    letters = [
+        'a',
+        'b',
+        'c',
+        'd',
+        'e',
+        'f',
+        'g',
+        'h',
+        'i',
+        'j',
+        'k',
+        'l',
+        'm',
+        'n',
+        'o',
+        'p',
+        'q',
+        'r',
+        's',
+        't',
+        'u',
+        'v',
+        'w',
+        'x',
+        'y',
+        'z',
+        'A',
+        'B',
+        'C',
+        'D',
+        'E',
+        'F',
+        'G',
+        'H',
+        'I',
+        'J',
+        'K',
+        'L',
+        'M',
+        'N',
+        'O',
+        'P',
+        'Q',
+        'R',
+        'S',
+        'T',
+        'U',
+        'V',
+        'W',
+        'X',
+        'Y',
+        'Z',
+    ]
     numbers = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']
     symbols = ['!', '#', '$', '%', '&', '(', ')', '*', '+']
 
@@ -33,6 +86,7 @@ def generate():
     password_textbox.insert(END, password)
     pyperclip.copy(password)
 
+
 # ---------------------------- SAVE PASSWORD ------------------------------- #
 
 
@@ -41,33 +95,31 @@ def save():
     website = website_textbox.get()
     username = email_textbox.get()
     psw = password_textbox.get()
-    screen_data = {website: {
-        'email':username,
-        'password':psw
-    }}
+    screen_data = {website: {'email': username, 'password': psw}}
 
     if len(website) == 0 or len(username) == 0 or len(psw) == 0:
-        messagebox.showwarning(title = 'Missing info', message = 'Please fill out all of the fields.')
+        messagebox.showwarning(title='Missing info', message='Please fill out all of the fields.')
 
     else:
         try:
-            with open(f'{current_dir}/output.json', mode ='r') as file:
+            with open(f'{current_dir}/output.json', mode='r') as file:
                 data = json.load(file)
                 data.update(screen_data)
-        
+
         except FileNotFoundError:
-            with open(f'{current_dir}/output.json', mode ='w') as file:
+            with open(f'{current_dir}/output.json', mode='w') as file:
                 json.dump(screen_data, file, indent=4)
 
         else:
-            with open(f'{current_dir}/output.json', mode ='w') as file:
+            with open(f'{current_dir}/output.json', mode='w') as file:
                 json.dump(data, file, indent=4)
 
-            website_textbox.delete(0,END)
+            website_textbox.delete(0, END)
             password_textbox.delete(0, END)
 
 
 # ---------------------------- SEARCH FILE ------------------------------- #
+
 
 def search():
 
@@ -82,9 +134,12 @@ def search():
             found_username = file_data[search_website]['email']
             found_psw = file_data[search_website]['password']
         except KeyError:
-            messagebox.showerror(title = 'Error', message='Credentials Not Found!')
+            messagebox.showerror(title='Error', message='Credentials Not Found!')
         else:
-            messagebox.showinfo(title = f'{search_website} credentials', message = f'Username: {found_username}\nPassword: {found_psw}')
+            messagebox.showinfo(
+                title=f'{search_website} credentials', message=f'Username: {found_username}\nPassword: {found_psw}'
+            )
+
 
 # ---------------------------- UI SETUP ------------------------------- #
 
@@ -115,7 +170,7 @@ website_textbox = Entry(width=25)
 website_textbox.grid(column=1, row=1, sticky='w')
 website_textbox.focus()
 
-search_btn = Button(text = 'Search', width = 15, command=search)
+search_btn = Button(text='Search', width=15, command=search)
 search_btn.grid(column=2, row=1, sticky='e')
 
 email_textbox = Entry(width=45)

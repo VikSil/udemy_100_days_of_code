@@ -5,12 +5,13 @@ import pandas as pd
 
 TOTAL_STATES = 50
 
+
 def main():
 
     current_dir = os.path.dirname(os.path.realpath(__file__))
     image_path = current_dir + '/blank_states_img.gif'
 
-    screen =turtle.Screen()
+    screen = turtle.Screen()
     screen.title("U.S. States Game")
     screen.addshape(image_path)
 
@@ -21,7 +22,7 @@ def main():
 
     guessed_states = []
     while len(guessed_states) < TOTAL_STATES:
-        prompt = screen.textinput(title = f'{len(guessed_states)}/{TOTAL_STATES} guessed', prompt = 'Type U.S. State Name')
+        prompt = screen.textinput(title=f'{len(guessed_states)}/{TOTAL_STATES} guessed', prompt='Type U.S. State Name')
 
         real_state = prompt.lower() in [state.lower() for state in states_list]
         newly_guessed = prompt.lower() not in [state.lower() for state in guessed_states]
@@ -52,8 +53,8 @@ def main():
         states_to_learn = list(set(states_list).symmetric_difference(set(guessed_states)))
         states_to_learn.sort()
         states_to_learn_series = pd.Series(states_to_learn)
-        states_to_learn_series.index +=1
-        states_to_learn_series.to_csv(f'{current_dir}/states_to_learn.csv', header = False)
+        states_to_learn_series.index += 1
+        states_to_learn_series.to_csv(f'{current_dir}/states_to_learn.csv', header=False)
 
 
 if __name__ == "__main__":

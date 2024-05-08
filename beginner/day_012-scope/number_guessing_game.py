@@ -1,13 +1,14 @@
 import random
 
+
 def main():
     print('Welcome to the Number Guessing Game!')
-    number = random.randint(1,101)
+    number = random.randint(1, 101)
     print("I'm thinking of a number between 1 and 100.")
     difficulty = None
     while not difficulty:
         difficulty = input("Choose a dificulty. Type 'easy' or 'hard':")
-        if difficulty != 'easy' and difficulty !='hard':
+        if difficulty != 'easy' and difficulty != 'hard':
             difficulty = None
             print('Wrong input. Try again!')
 

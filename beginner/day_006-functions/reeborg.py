@@ -1,8 +1,10 @@
 # Reeborg's Hurdle Challenge
 
+
 def turn_right():
     for i in range(0, 3):
         turn_left()
+
 
 def jump():
     move()
@@ -13,6 +15,7 @@ def jump():
     turn_right()
     move()
     turn_left()
+
 
 for i in range(0, 6):
     jump()
@@ -47,9 +50,11 @@ def turn_right():
     for i in range(0, 3):
         turn_left()
 
+
 # -----------------------------------------
 
 # Reebeorg's Hurdles Race - 2
+
 
 def jump():
     turn_left()
@@ -71,6 +76,7 @@ while at_goal() != True:
 # -----------------------------------------
 
 # Reebeorg's Hurdles Race - 3
+
 
 def turn_right():
     for i in range(0, 3):
@@ -113,6 +119,7 @@ while at_goal() != True:
 # -----------------------------------------
 
 # Reebeorg's Maze
+
 
 def turn_right():
     for i in range(0, 3):

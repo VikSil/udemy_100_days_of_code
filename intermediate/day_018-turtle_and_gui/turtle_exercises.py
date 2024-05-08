@@ -8,6 +8,7 @@ screen.colormode(255)
 pen.shape('turtle')
 pen.speed('fastest')
 
+
 def draw_tringle():
     pen.color('violet')
     for _ in range(4):
@@ -68,9 +69,9 @@ def draw_spirograph(num_of_circles, radius):
 
 def main():
     draw_tringle()
-    draw_dashed_line(10,10)
+    draw_dashed_line(10, 10)
     draw_multi_shapes()
-    draw_random_walk(100,40)
+    draw_random_walk(100, 40)
     draw_spirograph(30, 100)
 
 

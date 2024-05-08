@@ -27,9 +27,9 @@ scissors = '''
 ---.__(___)
 '''
 
-#Write your code below this line 👇
+# Write your code below this line 👇
 
-hands =[rock, paper, scissors]
+hands = [rock, paper, scissors]
 
 while True:
     try:
@@ -41,11 +41,11 @@ while True:
     except:
         print("Invalid input. Try again.")
 
-theirhand = randint(0,2)
+theirhand = randint(0, 2)
 
 print(hands[myhand])
 print()
-print("Computer chose:\n") 
+print("Computer chose:\n")
 print(hands[theirhand])
 print()
 

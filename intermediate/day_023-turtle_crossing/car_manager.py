@@ -6,25 +6,26 @@ STARTING_MOVE_DISTANCE = 5
 MOVE_INCREMENT = 5
 LEFT = 180
 
+
 class Car(Turtle):
 
     def __init__(self, step):
         super().__init__()
         self.up()
-        color = COLORS[randint(0, len(COLORS)-1)]
+        color = COLORS[randint(0, len(COLORS) - 1)]
         self.color(color)
         self.shape('square')
         self.shapesize(stretch_len=2, stretch_wid=1)
         self.setheading(LEFT)
-        y_coord  =randint(-300, 300)
-        self.goto(x = 310, y = y_coord)
+        y_coord = randint(-300, 300)
+        self.goto(x=310, y=y_coord)
         self.step = step
 
     def move(self):
         self.forward(self.step)
 
 
-class CarManager():
+class CarManager:
 
     def __init__(self):
         self.cars = []
@@ -41,7 +42,7 @@ class CarManager():
         for car in self.cars:
             car.move()
 
-    def detect_colision(self,x_cord, y_cord):
+    def detect_colision(self, x_cord, y_cord):
         for car in self.cars:
             if abs(car.xcor() - x_cord) < 15 and abs(car.ycor() - y_cord) < 20:
                 print('collided')
@@ -49,4 +50,4 @@ class CarManager():
         return False
 
     def level_up(self):
-        self.level +=1
+        self.level += 1

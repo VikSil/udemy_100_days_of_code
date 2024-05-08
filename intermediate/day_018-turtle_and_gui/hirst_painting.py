@@ -6,6 +6,7 @@ import os
 screen = Screen()
 pen = Turtle()
 
+
 def get_colors():
     rgb_colors = []
     current_dir = os.path.dirname(os.path.realpath(__file__))
@@ -26,7 +27,7 @@ def line_of_dots(color_list, number_of_dots, radius, spacing):
         pen.color(color_list[randint(0, len(color_list) - 1)])
         pen.dot(radius)
         pen.up()
-        pen.forward(spacing+radius)
+        pen.forward(spacing + radius)
     pen.up()
     pen.back((spacing + radius) * number_of_dots)
     pen.left(90)
@@ -46,7 +47,6 @@ def main():
     color_list = get_colors()
     for _ in range(10):
         line_of_dots(color_list, 10, 20, 50)
-
 
     screen.exitonclick()
 

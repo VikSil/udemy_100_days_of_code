@@ -4,8 +4,9 @@ from random import randint
 
 screen = Screen()
 
+
 def race(turtle: Turtle):
-    step = randint(1,100)
+    step = randint(1, 100)
     turtle.forward(step)
     return turtle
 
@@ -21,7 +22,7 @@ def set_ready(colors: list[str]):
         turtles[x].shape('turtle')
         turtles[x].speed('slowest')
         turtles[x].up()
-        turtles[x].goto(x = -400, y = -20*x)
+        turtles[x].goto(x=-400, y=-20 * x)
         turtles[x].showturtle()
 
     return turtles
@@ -46,8 +47,8 @@ def prepare_track(finishline: int):
 
 def main():
 
-    screen.setup(width = 1000, height = 300)
-    screen.ontimer(fun = None, t = 200) # wait 200ms before start execution
+    screen.setup(width=1000, height=300)
+    screen.ontimer(fun=None, t=200)  # wait 200ms before start execution
 
     colors = ['red', 'blue', 'green', 'orange', 'purple']
     turtles = set_ready(colors)
@@ -56,7 +57,7 @@ def main():
     prepare_track(finishline)
     racing = True
 
-    bet = screen.textinput(title = "Make your bet", prompt = "Which color turtle will win the race? ")
+    bet = screen.textinput(title="Make your bet", prompt="Which color turtle will win the race? ")
 
     while racing:
         for turtle in turtles:

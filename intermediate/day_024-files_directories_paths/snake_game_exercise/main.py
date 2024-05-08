@@ -5,10 +5,11 @@ from snake import Snake
 from food import Food
 from scoreboard import Scoreboard
 
+
 def main():
 
     screen = Screen()
-    screen.setup(width = 600, height = 600)
+    screen.setup(width=600, height=600)
     screen.bgcolor('black')
     screen.title('Snake Game')
     screen.tracer(0)
@@ -40,7 +41,7 @@ def main():
             snake.reset()
             score.reset()
 
-    score.game_over()  
+    score.game_over()
 
     screen.exitonclick()
 
