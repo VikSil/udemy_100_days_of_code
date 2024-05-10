@@ -72,7 +72,7 @@ def get_change(price1, price2):
 
 
 def get_news(company):
-    parameters = {'q': company, 'apikey': NEWS_API_KEY, 'sorted_by': 'popularity'}
+    parameters = {'qInTitle': company, 'apikey': NEWS_API_KEY, 'sorted_by': 'popularity'}
 
     response = requests.get(NEWS_ENDPOINT, params=parameters)
     response.raise_for_status()  # returns an error if the request failed
