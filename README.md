@@ -45,15 +45,15 @@ The course website can be viewed [here](https://www.udemy.com/course/100-days-of
 
 ## Intermediate+
 
-* Day 32: Send Email (smtplib) & Manage Dates (datetime)
-* Day 33: API Endpoints & API Parameters - ISS Overhead Notifier
-* Day 34: API Practice - Creating a GUI Quiz App
-* Day 35: Keys, Authentication & Environment Variables: Send SMS
-* Day 36: Stock Trading News Alert Project
-* Day 37: Habit Tracking Project: API Post Requests & Headers
-* Day 38: Workout Tracking Using Google Sheets
-* Day 39: Capstone Part 1: Flight Deal Finder
-* Day 40: Capstone Part 2: Flight Club
+* [Day 32: Send Email (smtplib) & Manage Dates (datetime)](https://github.com/VikSil/udemy_100_days_of_code/tree/trunk/intermediate%2B/day_032-email_and_dates)
+* [Day 33: API Endpoints & API Parameters - ISS Overhead Notifier](https://github.com/VikSil/udemy_100_days_of_code/tree/trunk/intermediate%2B/day_033-API_endpoints_and_parameters)
+* [Day 34: API Practice - Creating a GUI Quiz App](https://github.com/VikSil/udemy_100_days_of_code/tree/trunk/intermediate%2B/day_034-API_quiz_app)
+* [Day 35: Keys, Authentication & Environment Variables: Send SMS](https://github.com/VikSil/udemy_100_days_of_code/tree/trunk/intermediate%2B/day_035-keys_authentication_env_variables)
+* [Day 36: Stock Trading News Alert Project](https://github.com/VikSil/udemy_100_days_of_code/tree/trunk/intermediate%2B/day_036-stock_trading_news)
+* [Day 37: Habit Tracking Project: API Post Requests & Headers](https://github.com/VikSil/udemy_100_days_of_code/tree/trunk/intermediate%2B/day_037-API_post_requests_and_headers)
+* [Day 38: Workout Tracking Using Google Sheets](https://github.com/VikSil/udemy_100_days_of_code/tree/trunk/intermediate%2B/day_038-workout_tracking)
+* [Day 39: Capstone Part 1: Flight Deal Finder](https://github.com/VikSil/udemy_100_days_of_code/tree/trunk/intermediate%2B/day_039_040-flight_club)
+* [Day 40: Capstone Part 2: Flight Club](https://github.com/VikSil/udemy_100_days_of_code/tree/trunk/intermediate%2B/day_039_040-flight_club)
 
 See "Web Foundation" section for Day 41 to Day 44. 
   
@@ -73,8 +73,8 @@ See "Web Foundation" section for Day 41 to Day 44.
 
 ## Web Foundation
 
-* Day 41: Introduction to HTML
-* Day 42: Intermediate HTML
+* [Day 41: Introduction to HTML](https://github.com/VikSil/udemy_100_days_of_code/tree/trunk/web_foundation/day_041-intro_HTML)
+* [Day 42: Intermediate HTML](https://github.com/VikSil/udemy_100_days_of_code/tree/trunk/web_foundation/day_042-intermediate_HTML)
 * Day 43: Introduction to CSS
 * Day 44: Intermediate CSS
 * Day 58: Bootstrap
