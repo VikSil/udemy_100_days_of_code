@@ -75,8 +75,8 @@ See "Web Foundation" section for Day 41 to Day 44.
 
 * [Day 41: Introduction to HTML](https://github.com/VikSil/udemy_100_days_of_code/tree/trunk/web_foundation/day_041-intro_HTML)
 * [Day 42: Intermediate HTML](https://github.com/VikSil/udemy_100_days_of_code/tree/trunk/web_foundation/day_042-intermediate_HTML)
-* Day 43: Introduction to CSS
-* Day 44: Intermediate CSS
+* [Day 43: Introduction to CSS](https://github.com/VikSil/udemy_100_days_of_code/tree/trunk/web_foundation/day_043-intro_CSS)
+* [Day 44: Intermediate CSS](https://github.com/VikSil/udemy_100_days_of_code/tree/trunk/web_foundation/day_044-intermediate_CSS) 
 * Day 58: Bootstrap
 * Day 65: How to Create a Website that People will Love
   
