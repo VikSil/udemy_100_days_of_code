@@ -39,7 +39,7 @@ Artifacts, their initial price and associated cookie rate is summarised in below
 | Artifact | Initial Price | Cookie rate |
 |--|--|--|
 | Cursor | 15 | 1 |
-| Grandma | 100 | 4 (base) + 1 for owning at least one of each other type of artifact, except Clicker |
+| Grandma | 100 | 4 (base) + 1 for first Factory + 2 for first Mine + 3 for first Shipment + 4 for first Lab |
 | Factory | 500 | 20 |
 | Mine | 2000 | 50 |
 | Shipment | 7000 | 100 |
