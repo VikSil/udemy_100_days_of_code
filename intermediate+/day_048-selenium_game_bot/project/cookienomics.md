@@ -14,7 +14,7 @@ Cookies are stored in the `Cookies` variable. This is the amount that is increas
 
 ### Displayed cookies
 
-Is a separate variable `CookiesDisplay`. This is displayed in 'money' div in HTML, but other than display it is meaningless. It will display a slightly lesser amount than the actual `Cookies`, but due to the refresh rate of 3 times per second this difference is negligable.
+Is a separate variable `CookiesDisplay`. This is displayed in 'money' div in HTML. It will display a slightly lesser amount than the actual `Cookies`, but due to the refresh rate of 3 times per second this difference is negligable. Since there is no way for an outside code to directly tap into `Cookies` variable, the number displayed in `money` div has to be used as a proxy value.
 
 ```
 	CookiesDisplay+=(Cookies-CookiesDisplay)*0.5;
@@ -30,7 +30,7 @@ Is a separate variable `CookiesDisplay`. This is displayed in 'money' div in HTM
 
 ## Artifacts
 
-There are six early game artifacts to be considered. Other artifacts exist within the game, but their price level prohibits their acquisition within the first five minutes of the game. Source code in this document is simplified to reflect this.
+There are five early game artifacts to be considered. Other artifacts exist within the game, but their price level prohibits their acquisition within the first five minutes of the game. Source code in this document is simplified to reflect this.
 
 ### Artifact initial price and cookie rate
 
@@ -39,11 +39,10 @@ Artifacts, their initial price and associated cookie rate is summarised in below
 | Artifact | Initial Price | Cookie rate |
 |--|--|--|
 | Cursor | 15 | 1 |
-| Grandma | 100 | 4 (base) + 1 for first Factory + 2 for first Mine + 3 for first Shipment + 4 for first Lab |
+| Grandma | 100 | 4 (base) + 1 for first Factory + 2 for first Mine + 3 for first Shipment |
 | Factory | 500 | 20 |
 | Mine | 2000 | 50 |
 | Shipment | 7000 | 100 |
-| Lab | 50 000 | 500 |
 
 With each acquired unit of an artifact the price to acquire additional units of the same artifact is increased by 10% rounded up to the nearest integer. 
 
@@ -70,7 +69,6 @@ Displayed rate is calculated as one fifth of the sum total of cookie rates assoc
 	var grandmaGain=Math.ceil(4+(Factories?1:0)+(Mines?2:0)+(Shipments?3:0)+(Labs?4:0));
 
 	var cps=0;
-	cps+=Labs*500/5;
 	cps+=Shipments*100/5;
 	cps+=Mines*50/5;
 	cps+=Factories*20/5;
@@ -97,7 +95,6 @@ On each run `Main` function will:
 
 Conditionals for increasing `Cookies` variable are:
 ```
-	if (Labs && T%Math.ceil(150/Labs)==0) AddCookie(500,'labs');
 	if (Shipments && T%Math.ceil(150/Shipments)==0) AddCookie(100,'shipments');
 	if (Mines && T%Math.ceil(150/Mines)==0) AddCookie(50,'mines');
 	if (Factories && T%Math.ceil(150/Factories)==0) AddCookie(20,'factories');
