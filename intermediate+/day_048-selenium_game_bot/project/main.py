@@ -4,7 +4,7 @@ from selenium.webdriver.common.keys import Keys
 from pathlib import Path
 from datetime import datetime, timedelta
 import statistics
-from typing import TypedDict
+from typing import TypedDict, Tuple
 from selenium.common.exceptions import StaleElementReferenceException
 
 import os
@@ -54,10 +54,15 @@ def main():
     print(start_time)
     print(end_time)
 
+    artifacts = update_grandma_rate(artifacts)
+    next_buy = find_best_roi(artifacts)
+
     while end_time >  datetime.now():    
         click_cookie(driver)
-        artifacts = update_grandma_rate(artifacts)
-        buy_available(driver, artifacts)
+        try:
+            next_buy, artifacts = strategy2_wait_for_best_roi(driver, next_buy, artifacts)
+        except StaleElementReferenceException:
+            continue
 
     # would expect 30 * 60 = 1800 clicks per minute
     # number of clicks per minute over 30 observations:
@@ -69,6 +74,7 @@ def main():
     print(statistics.median(observations)) # 2301
     # so, 11 505 - 11 550 clicks in 5 minutes
 
+    print(artifacts)
 
 def click_cookie(driver:webdriver.Chrome) ->None:
     cookie = driver.find_element(By.ID, value ='cookie')
@@ -87,7 +93,7 @@ def update_grandma_rate(artifacts: ArtifactsDict) ->ArtifactsDict:
     return artifacts
 
 
-def buy_available(driver: webdriver.Chrome, artifacts: ArtifactsDict) -> ArtifactsDict:
+def strategy1_buy_available(driver: webdriver.Chrome, artifacts: ArtifactsDict) -> None:
     '''
     Function implements the naive approach of buying the highest yielding artifact
     that we have enough cookies to acquire
@@ -99,15 +105,74 @@ def buy_available(driver: webdriver.Chrome, artifacts: ArtifactsDict) -> Artifac
     0 - Mines
     16.6 - cookie rate
     '''
-    div_list= list(artifacts.keys())
-    for div in reversed(div_list):
+    for div in reversed(list(artifacts.keys())):
+        check_div = driver.find_element(By.ID, value=div)
+        if check_div.get_attribute('class') != 'grayed':
+            check_div.click()
+
+
+def strategy2_wait_for_best_roi(
+    driver: webdriver.Chrome, next_buy: str, artifacts: ArtifactsDict
+) -> Tuple[str, ArtifactsDict]:
+    '''
+    Function implements a strategy of waiting to accrue enough cookies 
+    to acquire the artifact with the highest ROI
+
+    Over 5 minutes of runtime we end up with approx.
+    12 - Cursors
+    15 - GrandMas
+    9 - Factories
+    3 - Mines
+    89.4 - cookie rate
+    '''
+
+    if check_if_available(driver, next_buy):
+        artifacts = acquire(driver, next_buy, artifacts)
+        artifacts = refresh_price(driver, next_buy, artifacts)
+        artifacts = update_grandma_rate(artifacts)
+        next_buy = find_best_roi(artifacts)
+    return next_buy, artifacts
+
+
+def find_best_roi(artifacts: ArtifactsDict) ->str:
+    best_roi = 0
+    best_artifact = ''
+    for artifact in list(artifacts.keys()):
+        roi = artifacts[artifact]['rate']/artifacts[artifact]['price']
+        if roi > best_roi:
+            best_roi = roi
+            best_artifact = artifact
+    return best_artifact
+
+
+def check_if_available(driver: webdriver.Chrome, artifact:str) -> bool:
+    try:
+        check_div = driver.find_element(By.ID, value=artifact)
+        if check_div.get_attribute('class') != 'grayed':
+            return True
+    except StaleElementReferenceException:
+        return False
+    return False
+
+
+def refresh_price(driver: webdriver.Chrome, artifact:str, artifacts: ArtifactsDict) ->ArtifactsDict:
+    got_price = False
+    while not got_price:
         try:
-            check_div = driver.find_element(By.ID, value=div)
-            if check_div.get_attribute('class') != 'grayed':
-                check_div.click()
-                return artifacts
+            div = driver.find_element(By.CSS_SELECTOR, value=f'#{artifact} b')
+            price = int(div.text.split('- ')[1].replace(',',''))
+            artifacts[artifact]['price'] = price
+            got_price = True
         except StaleElementReferenceException:
             continue
+    return artifacts
+
+
+def acquire(driver: webdriver.Chrome, artifact:str, artifacts: ArtifactsDict) ->ArtifactsDict:
+    div = driver.find_element(By.ID, value=artifact)
+    div.click()
+    artifacts[artifact]['owned'] +=1
+    return artifacts
 
 
 if __name__ == '__main__':
