@@ -4,6 +4,8 @@ from selenium.webdriver.common.keys import Keys
 from pathlib import Path
 from datetime import datetime, timedelta
 import statistics
+from typing import TypedDict
+from selenium.common.exceptions import StaleElementReferenceException
 
 import os
 import sys
@@ -18,32 +20,44 @@ from utils import open_page
 BASE_DIR = Path(__file__).resolve().parent
 URL = 'http://orteil.dashnet.org/experiments/cookie/'
 DRIVER_EXE = BASE_DIR / '../../../chromedriver.exe'
-
-# in Python dictionaries are O(1), while lists are O(n)
-# https://stackoverflow.com/questions/38927794/python-dictionary-vs-list-which-is-faster
-# hence use dictionary of dictionaries
-ARTIFACTS = {
-    'cursor': {'price': 15, 'owned': 0, 'rate': 1},
-    'grandma': {'price': 100, 'owned': 0, 'rate': 0},
-    'factory': {'price': 500, 'owned': 0, 'rate': 20},
-    'mine': {'price': 2000, 'owned': 0, 'rate': 50},
-    'shipment': {'price': 7000, 'owned': 0, 'rate': 100},
-    'lab': {'price': 50000, 'owned': 0, 'rate': 500},
-}
-
 BASERATE = 2310 / 12 # mean per minute / 5 second intervals per minute
+
+class DetailsDict(TypedDict):
+    price :int
+    owned:int
+    rate:int
+
+
+class ArtifactsDict(TypedDict):
+    buyCursor : DetailsDict
+    buyGrandma : DetailsDict
+    buyFactory : DetailsDict
+    BuyMine : DetailsDict
+    buyShipment : DetailsDict
+
 
 def main():
     driver = open_page(DRIVER_EXE, URL)
+    # in Python dictionaries are O(1), while lists are O(n)
+    # https://stackoverflow.com/questions/38927794/python-dictionary-vs-list-which-is-faster
+    # hence use dictionary of dictionaries
+    artifacts = {
+        'buyCursor': {'price': 15, 'owned': 0, 'rate': 1},
+        'buyGrandma': {'price': 100, 'owned': 0, 'rate': 0},
+        'buyFactory': {'price': 500, 'owned': 0, 'rate': 20},
+        'buyMine': {'price': 2000, 'owned': 0, 'rate': 50},
+        'buyShipment': {'price': 7000, 'owned': 0, 'rate': 100},
+}
 
     start_time = datetime.now()
-    end_time = start_time + timedelta(minutes = 1)
+    end_time = start_time + timedelta(minutes = 5)
     print(start_time)
     print(end_time)
 
     while end_time >  datetime.now():    
         click_cookie(driver)
-        update_grandma_rate()
+        artifacts = update_grandma_rate(artifacts)
+        buy_available(driver, artifacts)
 
     # would expect 30 * 60 = 1800 clicks per minute
     # number of clicks per minute over 30 observations:
@@ -60,18 +74,41 @@ def click_cookie(driver:webdriver.Chrome) ->None:
     cookie = driver.find_element(By.ID, value ='cookie')
     cookie.click()    
 
-def update_grandma_rate():
-    if ARTIFACTS['grandma']['rate']<14:
+def update_grandma_rate(artifacts: ArtifactsDict) ->ArtifactsDict:
+    if artifacts['buyGrandma']['rate'] < 10:
         grandma_rate = 4
-        if ARTIFACTS['factory']['owned'] > 0:
+        if artifacts['buyFactory']['owned'] > 0:
             grandma_rate +=1
-        if ARTIFACTS['mine']['owned'] > 0:
+        if artifacts['buyMine']['owned'] > 0:
             grandma_rate +=2
-        if ARTIFACTS['shipment']['owned'] > 0:
+        if artifacts['buyShipment']['owned'] > 0:
             grandma_rate += 3
-        if ARTIFACTS['lab']['owned'] > 0:
-            grandma_rate += 4
-        ARTIFACTS['grandma']['rate'] = grandma_rate
+        artifacts['buyGrandma']['rate'] = grandma_rate
+    return artifacts
+
+
+def buy_available(driver: webdriver.Chrome, artifacts: ArtifactsDict) -> ArtifactsDict:
+    '''
+    Function implements the naive approach of buying the highest yielding artifact
+    that we have enough cookies to acquire
+
+    Over 5 minutes of runtime we end up with approx.
+    31 - Cursors
+    13 - GrandMas
+    0 - Factories
+    0 - Mines
+    16.6 - cookie rate
+    '''
+    div_list= list(artifacts.keys())
+    for div in reversed(div_list):
+        try:
+            check_div = driver.find_element(By.ID, value=div)
+            if check_div.get_attribute('class') != 'grayed':
+                check_div.click()
+                return artifacts
+        except StaleElementReferenceException:
+            continue
+
 
 if __name__ == '__main__':
     main()
