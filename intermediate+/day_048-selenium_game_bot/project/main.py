@@ -5,7 +5,7 @@ from pathlib import Path
 from datetime import datetime, timedelta
 import statistics
 import copy
-from typing import TypedDict, Tuple
+from typing import TypedDict, Tuple, List, Dict
 from selenium.common.exceptions import StaleElementReferenceException
 
 import os
@@ -21,7 +21,7 @@ from utils import open_page
 BASE_DIR = Path(__file__).resolve().parent
 URL = 'http://orteil.dashnet.org/experiments/cookie/'
 DRIVER_EXE = BASE_DIR / '../../../chromedriver.exe'
-BASERATE = 2310 / 12  # mean per minute / 5 second intervals per minute
+BASERATE = 2310 / 60  # mean per minute / 60
 
 
 class DetailsDict(TypedDict):
@@ -57,17 +57,20 @@ def main():
     print(end_time)
 
     assets = update_grandma_rate(assets)
-    next_buy = find_best_roi(assets)
+    next_buy = find_best_roi_timehorizon(driver, assets, end_time)
 
     while end_time > datetime.now():
         click_cookie(driver)
         try:
-            next_buy, assets = strategy2_wait_for_best_roi(driver, next_buy, assets)
+            next_buy, assets = strategy3_best_roi_timehorizon(driver, next_buy, assets, end_time)
         except StaleElementReferenceException:
             continue
 
+    print(assets)
+
     cash = count_cookies(driver)
     assets = spend_leftovers(driver, assets, cash)
+    print(assets)
 
     # would expect 30 * 60 = 1800 clicks per minute
     # number of clicks per minute over 30 observations:
@@ -118,7 +121,7 @@ def strategy1_buy_available(driver: webdriver.Chrome, assets: AssetsDict) -> Non
             check_div.click()
 
 
-def strategy2_wait_for_best_roi(driver: webdriver.Chrome, next_buy: str, assets: AssetsDict) -> Tuple[str, AssetsDict]:
+def strategy2_best_roi(driver: webdriver.Chrome, next_buy: str, assets: AssetsDict) -> Tuple[str, AssetsDict]:
     '''
     Function implements a strategy of waiting to accrue enough cookies
     to acquire the asset with the highest ROI
@@ -139,15 +142,53 @@ def strategy2_wait_for_best_roi(driver: webdriver.Chrome, next_buy: str, assets:
     return next_buy, assets
 
 
+def strategy3_best_roi_timehorizon(
+    driver: webdriver.Chrome, next_buy: str, assets: AssetsDict, end_time: datetime
+) -> Tuple[str, AssetsDict]:
+    '''
+    Function implements a strategy of waiting to accrue enough cookies
+    to acquire the asset with the highest ROI, if there is enough remaining time
+
+    Over 5 minutes of runtime (+ spend_leftover) we end up with approx.
+    13 + 3 - Cursors
+    14 + 1 - GrandMas
+    8 - Factories
+    5 - Mines
+    106.2 - cookie rate
+    '''
+
+    if check_if_available(driver, next_buy):
+        assets = acquire(driver, next_buy, assets)
+        assets = refresh_price(driver, next_buy, assets)
+        assets = update_grandma_rate(assets)
+        next_buy = find_best_roi_timehorizon(driver, assets, end_time)
+    return next_buy, assets
+
+
 def find_best_roi(assets: AssetsDict) -> str:
-    best_roi = 0
-    best_asset = ''
-    for asset in list(assets.keys()):
-        roi = assets[asset]['rate'] / assets[asset]['price']
-        if roi > best_roi:
-            best_roi = roi
-            best_asset = asset
+    sorted_assets = find_best_roi_array(assets)
+    best_asset = str(list(sorted_assets.keys())[0])
     return best_asset
+
+
+def find_best_roi_array(assets: AssetsDict) ->Dict:
+    best_roi ={}
+    for asset in list(assets.keys()):
+        best_roi[asset] = assets[asset]['rate'] / assets[asset]['price']
+    sorted_best_roi = dict(sorted(best_roi.items(), key = lambda x:x[1], reverse = True))
+    return sorted_best_roi  
+
+
+def find_best_roi_timehorizon(driver: webdriver.Chrome, assets: AssetsDict, end_time: datetime) ->str:
+    sorted_best_roi = find_best_roi_array(assets)
+    # this does not work because cookies don't drop instantaneously, it tends to get a false value
+    cash = count_cookies(driver)
+    rate = get_rate(driver)
+    time_remaining = (end_time - datetime.now()).total_seconds()
+    cash_till_end = cash + (rate + BASERATE) * time_remaining
+    for asset in sorted_best_roi.keys():
+        if assets[asset]['price']< cash_till_end:
+            return asset
 
 
 def check_if_available(driver: webdriver.Chrome, asset: str) -> bool:
@@ -184,6 +225,12 @@ def count_cookies(driver: webdriver.Chrome) -> int:
     div = driver.find_element(By.ID, value='money')
     money = int(div.text.replace(',',''))
     return money
+
+
+def get_rate(driver: webdriver.Chrome) ->float:
+    div = driver.find_element(By.ID, value='cps')
+    rate = float(div.text.split(': ')[1])
+    return rate
 
 
 def spend_leftovers(driver: webdriver.Chrome, assets: AssetsDict, cash) -> AssetsDict:
