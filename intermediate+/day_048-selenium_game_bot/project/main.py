@@ -54,20 +54,19 @@ class AssetsDict(TypedDict):
 def main():
     assets = copy.deepcopy(STARTING_ASSETS)
     assets = update_grandma_rate(assets)
+    asset_chain = precalculate_strategy1(RUNTIME, BASERATE, assets)
+
+    driver = open_page(DRIVER_EXE, URL)
 
     start_time = datetime.now()
     end_time = start_time + timedelta(seconds=RUNTIME)
     print(start_time)
     print(end_time)
 
-    assets = update_grandma_rate(assets)
-    next_buy = find_best_roi_timehorizon(0, BASERATE, assets, RUNTIME)
-    driver = open_page(DRIVER_EXE, URL)
-
     while end_time > datetime.now():
         click_cookie(driver)
         try:
-            next_buy, assets = strategy3_best_roi_timehorizon(driver, next_buy, assets, end_time)
+            run_precalculated_strategy(driver, asset_chain)
         except StaleElementReferenceException:
             continue
 
@@ -171,6 +170,48 @@ def strategy3_best_roi_timehorizon(
     return next_buy, assets
 
 
+def precalculate_strategy1(time:int, accrue_rate:float, assets: AssetsDict) ->List[str]:
+    '''
+    Function implements the naive approach of buying the highest yielding asset
+    that we have enough cookies to acquire with pre-calculated sequence of buys
+
+    Over 5 minutes of runtime we end up with approx.
+    36 - Cursors
+    18 - GrandMas
+    1 - Factories
+    0 - Mines
+    29.2 - cookie rate
+    '''
+    asset_chain = []
+    
+    assets = dict(
+    sorted(assets.items(), key=lambda item: item[1]['price']))
+    next_asset = list(assets.keys())[0]
+    next_price = assets[next_asset]['price']
+    accrue_time = next_price/accrue_rate
+    remaining_time = time - accrue_time 
+    
+    if remaining_time > 0:
+        assets[next_asset]['owned'] +=1
+        assets = refresh_theo_price(next_asset, assets)
+        assets = update_grandma_rate(assets)
+        accrue_rate +=assets[next_asset]['rate']
+        chain_tail= precalculate_strategy1(remaining_time, accrue_rate, assets)
+        asset_chain.append(next_asset)
+        asset_chain = asset_chain + chain_tail
+        return (asset_chain)        
+    else:
+        #append one more than necessary, just in case
+        asset_chain.append(next_asset)
+        return (asset_chain)
+
+def run_precalculated_strategy(driver: webdriver.Chrome, asset_chain: List) ->None:
+    next_buy = asset_chain[0]
+    if check_if_available(driver, next_buy):
+        acquire_no_accounting(driver, next_buy)
+        asset_chain.pop(0)
+    
+
 def find_best_roi(assets: AssetsDict) -> str:
     sorted_assets = find_best_roi_array(assets)
     best_asset = str(list(sorted_assets.keys())[0])
@@ -262,6 +303,17 @@ def spend_leftovers(driver: webdriver.Chrome, assets: AssetsDict, cash) -> Asset
                 cash -=price
 
     return assets
+
+
+def refresh_theo_price(asset: str, assets: AssetsDict) -> AssetsDict:
+    curr_price = assets[asset]['price']
+    assets[asset]['price'] = int(math.ceil(curr_price * 1.1))
+    return assets
+
+
+def acquire_no_accounting(driver: webdriver.Chrome, asset: str) -> None:
+    div = driver.find_element(By.ID, value=asset)
+    div.click()
 
 
 if __name__ == '__main__':
