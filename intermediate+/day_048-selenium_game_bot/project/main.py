@@ -5,6 +5,7 @@ from pathlib import Path
 from datetime import datetime, timedelta
 import statistics
 import copy
+import math
 from typing import TypedDict, Tuple, List, Dict
 from selenium.common.exceptions import StaleElementReferenceException
 
@@ -22,6 +23,18 @@ BASE_DIR = Path(__file__).resolve().parent
 URL = 'http://orteil.dashnet.org/experiments/cookie/'
 DRIVER_EXE = BASE_DIR / '../../../chromedriver.exe'
 BASERATE = 2310 / 60  # mean per minute / 60
+RUNTIME = 300
+
+# in Python dictionaries are O(1), while lists are O(n)
+# https://stackoverflow.com/questions/38927794/python-dictionary-vs-list-which-is-faster
+# hence use dictionary of dictionaries
+STARTING_ASSETS = {
+        'buyCursor': {'price': 15, 'owned': 0, 'rate': 1},
+        'buyGrandma': {'price': 100, 'owned': 0, 'rate': 0},
+        'buyFactory': {'price': 500, 'owned': 0, 'rate': 20},
+        'buyMine': {'price': 2000, 'owned': 0, 'rate': 50},
+        'buyShipment': {'price': 7000, 'owned': 0, 'rate': 100},
+    }
 
 
 class DetailsDict(TypedDict):
@@ -39,25 +52,17 @@ class AssetsDict(TypedDict):
 
 
 def main():
-    driver = open_page(DRIVER_EXE, URL)
-    # in Python dictionaries are O(1), while lists are O(n)
-    # https://stackoverflow.com/questions/38927794/python-dictionary-vs-list-which-is-faster
-    # hence use dictionary of dictionaries
-    assets = {
-        'buyCursor': {'price': 15, 'owned': 0, 'rate': 1},
-        'buyGrandma': {'price': 100, 'owned': 0, 'rate': 0},
-        'buyFactory': {'price': 500, 'owned': 0, 'rate': 20},
-        'buyMine': {'price': 2000, 'owned': 0, 'rate': 50},
-        'buyShipment': {'price': 7000, 'owned': 0, 'rate': 100},
-    }
+    assets = copy.deepcopy(STARTING_ASSETS)
+    assets = update_grandma_rate(assets)
 
     start_time = datetime.now()
-    end_time = start_time + timedelta(minutes=5)
+    end_time = start_time + timedelta(seconds=RUNTIME)
     print(start_time)
     print(end_time)
 
     assets = update_grandma_rate(assets)
-    next_buy = find_best_roi_timehorizon(driver, assets, end_time)
+    next_buy = find_best_roi_timehorizon(0, BASERATE, assets, RUNTIME)
+    driver = open_page(DRIVER_EXE, URL)
 
     while end_time > datetime.now():
         click_cookie(driver)
@@ -66,11 +71,8 @@ def main():
         except StaleElementReferenceException:
             continue
 
-    print(assets)
-
     cash = count_cookies(driver)
     assets = spend_leftovers(driver, assets, cash)
-    print(assets)
 
     # would expect 30 * 60 = 1800 clicks per minute
     # number of clicks per minute over 30 observations:
@@ -161,7 +163,11 @@ def strategy3_best_roi_timehorizon(
         assets = acquire(driver, next_buy, assets)
         assets = refresh_price(driver, next_buy, assets)
         assets = update_grandma_rate(assets)
-        next_buy = find_best_roi_timehorizon(driver, assets, end_time)
+        # this does not work because cookies don't drop instantaneously, it tends to get a false value
+        cash = count_cookies(driver)
+        rate = get_rate(driver) + BASERATE
+        time_remaining = (end_time - datetime.now()).total_seconds()
+        next_buy = find_best_roi_timehorizon(cash, rate, assets, time_remaining)
     return next_buy, assets
 
 
@@ -179,13 +185,9 @@ def find_best_roi_array(assets: AssetsDict) ->Dict:
     return sorted_best_roi  
 
 
-def find_best_roi_timehorizon(driver: webdriver.Chrome, assets: AssetsDict, end_time: datetime) ->str:
-    sorted_best_roi = find_best_roi_array(assets)
-    # this does not work because cookies don't drop instantaneously, it tends to get a false value
-    cash = count_cookies(driver)
-    rate = get_rate(driver)
-    time_remaining = (end_time - datetime.now()).total_seconds()
-    cash_till_end = cash + (rate + BASERATE) * time_remaining
+def find_best_roi_timehorizon(cash:int, rate: float, assets: AssetsDict, time_remaining:int) ->str:
+    sorted_best_roi = find_best_roi_array(assets)    
+    cash_till_end = cash + rate * time_remaining
     for asset in sorted_best_roi.keys():
         if assets[asset]['price']< cash_till_end:
             return asset
