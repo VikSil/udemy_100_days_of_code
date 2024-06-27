@@ -57,10 +57,10 @@ The course website can be viewed [here](https://www.udemy.com/course/100-days-of
 
 See "Web Foundation" section for Day 41 to Day 44. 
   
-* Day 45: Web Scraping with Beautiful Soup
-* Day 46: Create a Spotify Playlist using the Musical Time Machine
-* Day 47: Create and Automated Amazon Price Tracker
-* Day 48: Selenium Webdriver Browser and Game Playing Bot
+* [Day 45: Web Scraping with Beautiful Soup](https://github.com/VikSil/udemy_100_days_of_code/tree/trunk/intermediate%2B/day_045-web_scraping)
+* [Day 46: Create a Spotify Playlist using the Musical Time Machine](https://github.com/VikSil/udemy_100_days_of_code/tree/trunk/intermediate%2B/day_046-spotify_playlist)
+* [Day 47: Create and Automated Amazon Price Tracker](https://github.com/VikSil/udemy_100_days_of_code/tree/trunk/intermediate%2B/day_047-amazon_price_tracker)
+* [Day 48: Selenium Webdriver Browser and Game Playing Bot](https://github.com/VikSil/udemy_100_days_of_code/tree/trunk/intermediate%2B/day_048-selenium_game_bot)
 * Day 49: Automating Job Applications on LinkedIn
 * Day 50: Auto Tinder Swiping Bot
 * Day 51: Internet Speed Twitter Complaint Bot
