@@ -3,6 +3,9 @@ from selenium.webdriver.chrome.service import Service
 
 
 def open_page(driver_exe: str, url: str, detach: bool = True) -> webdriver.Chrome:
+    '''
+    Function opens webpage and returns driver that allows to control the page
+    '''
     s = Service(driver_exe)
     options = webdriver.ChromeOptions()
     options.add_experimental_option('detach', detach)
