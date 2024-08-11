@@ -20,7 +20,7 @@ The course website can be viewed [here](https://www.udemy.com/course/100-days-of
 * [Day 10: Functions with Outputs](https://github.com/VikSil/Udemy100daysOfCode/tree/trunk/beginner/day_010-functions_with_outputs)
 * [Day 11: The Blackjack Capstone Project](https://github.com/VikSil/Udemy100daysOfCode/tree/trunk/beginner/day_011-blackjack)
 * [Day 12: Scope & Number Guessing Game](https://github.com/VikSil/Udemy100daysOfCode/tree/trunk/beginner/day_012-scope)
-* [Day 13: Debugging: how to Find and Fix Errros in your Code](https://github.com/VikSil/Udemy100daysOfCode/tree/trunk/beginner/day_013-debugging)
+* [Day 13: Debugging: how to Find and Fix Errors in your Code](https://github.com/VikSil/Udemy100daysOfCode/tree/trunk/beginner/day_013-debugging)
 * [Day 14: Higher Lower Game Project](https://github.com/VikSil/Udemy100daysOfCode/tree/trunk/beginner/day_014-higher_lower_game)
 
 ## Intermediate
